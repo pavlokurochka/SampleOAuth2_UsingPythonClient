@@ -14,8 +14,18 @@ from django.conf import settings
 from django.core import serializers
 
 from app.services import qbo_api_call
+from app.models import Token
+
 
 # Create your views here.
+
+def save_tokens(in_access_token  , in_refresh_token , in_realm_id):
+    e = Token.objects.get(id=1)
+    e.access_token = in_access_token
+    e.refresh_token = in_refresh_token
+    e.realm_id = in_realm_id
+    e.save()
+
 def index(request):
     return render(request, 'index.html')
 
@@ -75,6 +85,8 @@ def callback(request):
         request.session['access_token'] = auth_client.access_token
         request.session['refresh_token'] = auth_client.refresh_token
         request.session['id_token'] = auth_client.id_token
+        ###### ****** ######
+        save_tokens (auth_client.access_token,auth_client.refresh_token, realm_id )
     except AuthClientError as e:
         # just printing status_code here but it can be used for retry workflows, etc
         print(e.status_code)
@@ -94,6 +106,10 @@ def connected(request):
         refresh_token=request.session.get('refresh_token', None), 
         id_token=request.session.get('id_token', None),
     )
+
+           ###### ****** ######
+
+    save_tokens (request.session.get('access_token', None),request.session.get('refresh_token', None), request.session.get('realm_id', None) )
 
     if auth_client.id_token is not None:
         return render(request, 'connected.html', context={'openid': True})

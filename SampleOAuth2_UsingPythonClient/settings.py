@@ -123,8 +123,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 
 # OAauth2 config here
-CLIENT_ID = '<EnterHere>'
-CLIENT_SECRET = '<EnterHere>'
+CLIENT_ID = 'Q0dg0js1C6uTJTv0ftbJgtNWUlbWEzNi4BR29X71uquGYtA6bj'
+CLIENT_SECRET = 'zDx2caAc8SW7ObNTbwc8iIM33LRqnogZ7iWwB46X'
 REDIRECT_URI = 'http://localhost:8000/app/callback'
 ENVIRONMENT = 'sandbox'
 
